@@ -1,0 +1,9 @@
+Package: com.tyhoff.spotifysearch
+Name: SpotifySearch
+Depends: mobilesubstrate, am.theiostre.searchloader 
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: SpotifySearch. Requires Spotify
+Maintainer: Tyler H
+Author: Tyler H
+Section: Tweak
