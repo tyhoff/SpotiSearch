@@ -10,20 +10,20 @@
 #import <SearchLoader/TLLibrary.h>
 
 
-@interface TLSpotifyTracksDatastore : NSObject <TLSearchDatastore> {
+@interface TLSpotifyArtistsDatastore : NSObject <TLSearchDatastore> {
 	BOOL $usingInternet;
 }
 @end
 
-@implementation TLSpotifyTracksDatastore
+@implementation TLSpotifyArtistsDatastore
 - (void)performQuery:(SDSearchQuery *)query withResultsPipe:(SDSearchQuery *)results {
 	NSString *searchString = [query searchString];
 	
-	int limit = [[[NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotifysearch.tracks.plist"] objectForKey:@"Limit"] intValue] ?: 5;
+	int limit = [[[NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotifysearch.artists.plist"] objectForKey:@"Limit"] intValue] ?: 5;
 
 	searchString = [searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 
-	NSString *format = [NSString stringWithFormat:@"http://ws.spotify.com/search/1/track.json?q=%@", searchString];
+	NSString *format = [NSString stringWithFormat:@"http://ws.spotify.com/search/1/artist.json?q=%@", searchString];
 	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:format] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:5];
 	
 	TLRequireInternet(YES);
@@ -35,34 +35,15 @@
 			NSMutableArray *searchResults = [NSMutableArray array];
 			
 			NSDictionary *root = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-			NSArray *items = [root objectForKey:@"tracks"];
+			NSArray *items = [root objectForKey:@"artists"];
 
 			int count = 0;
 			for (NSDictionary *item in items) {
 				if (count >= limit)
 					break;
 
-				/* create the artist string */
-				NSMutableString * artistString = [NSMutableString string];
-				NSArray * artists = [item objectForKey:@"artists"];
-				for (int i=0; i<[artists count]; i++) {
-					NSDictionary *artist = [artists objectAtIndex:i];
-
-					if (i == [artists count] - 1)
-						[artistString appendString:[NSString stringWithFormat:@"%@", [artist objectForKey:@"name"]]];
-					else
-						[artistString appendString:[NSString stringWithFormat:@"%@, ", [artist objectForKey:@"name"]]];
-				}
-
-
-				/* create the album string */
-				NSDictionary *album = [item objectForKey:@"album"];
-				NSString *albumString = [NSString stringWithFormat:@"%@ - %@", [album objectForKey:@"name"], [album objectForKey:@"released"]];
-
 				SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
 				[result setTitle:[item objectForKey:@"name"]];
-				[result setSubtitle:artistString];
-				[result setSummary:albumString];
 
 				NSString *url = [item objectForKey:@"href"];
 				[result setUrl:url];
@@ -70,7 +51,7 @@
 				count++;
 			}
 			
-			TLCommitResults(searchResults, TLDomain(@"com.spotify.client.tracks", @"SpotifySearchTracks"), results);
+			TLCommitResults(searchResults, TLDomain(@"com.spotify.client.artists", @"SpotifySearchArtists"), results);
 		}
 		
 		TLRequireInternet(NO);
@@ -83,11 +64,11 @@
 }
 
 - (NSArray *)searchDomains {
-	return [NSArray arrayWithObject:[NSNumber numberWithInteger:TLDomain(@"com.spotify.client.tracks", @"SpotifySearchTracks")]];
+	return [NSArray arrayWithObject:[NSNumber numberWithInteger:TLDomain(@"com.spotify.client.artists", @"SpotifySearchArtists")]];
 }
 
 - (NSString *)displayIdentifierForDomain:(NSInteger)domain {
-	return @"com.spotify.client.tracks";
+	return @"com.spotify.client.artists";
 }
 
 - (BOOL)blockDatastoreComplete {

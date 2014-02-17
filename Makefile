@@ -1,4 +1,4 @@
-SUBPROJECTS = tracks artists
+SUBPROJECTS = tracks artists albums
 
 export ARCHS = armv7 arm64
 
