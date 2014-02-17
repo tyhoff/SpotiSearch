@@ -5,7 +5,7 @@
 	<key>LSTypeIsPackage</key>
 	<true />
 	<key>SPCategory</key>
-	<string>SpotifySearch</string>
+	<string>SpotifySearchTracks</string>
 	<key>SPDisplayIdentifier</key>
 	<string>com.spotify.client</string>
 	<key>TLIsSearchBundle</key>

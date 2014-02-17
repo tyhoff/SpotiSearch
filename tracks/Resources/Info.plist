@@ -7,11 +7,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>SpotifySearch</string>
+	<string>SpotifySearchTracks</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.tyhoff.spotifysearch</string>
+	<string>com.tyhoff.spotifysearch.tracks</string>
 	<key>CFBundleName</key>
-	<string>SpotifySearch</string>
+	<string>SpotifySearchTracks</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -45,7 +45,7 @@
 	<key>MinimumOSVersion</key>
 	<string>5.0</string>
 	<key>NSPrincipalClass</key>
-	<string>TLSpotifySearchDatastore</string>
+	<string>TLSpotifyTracksDatastore</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
