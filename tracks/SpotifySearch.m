@@ -39,7 +39,7 @@
 
 			int count = 0;
 			for (NSDictionary *item in items) {
-				if (count > limit)
+				if (count >= limit)
 					break;
 
 				/* create the artist string */

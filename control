@@ -1,9 +1,9 @@
 Package: com.tyhoff.spotifysearch
 Name: SpotifySearch
-Depends: mobilesubstrate, am.theiostre.searchloader 
+Depends: mobilesubstrate, am.theiostre.searchloader, firmware (>= 7.0)
 Version: 0.0.1
 Architecture: iphoneos-arm
-Description: SpotifySearch. Requires Spotify
+Description: Search Spotify tracks, artists and albums from Spotlight. Requires Spotify
 Maintainer: Tyler H
 Author: Tyler H
 Section: Tweak

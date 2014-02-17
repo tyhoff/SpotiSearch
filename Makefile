@@ -1,23 +1,15 @@
+SUBPROJECTS = tracks
+
 export ARCHS = armv7 arm64
 
 include theos/makefiles/common.mk
 
-BUNDLE_NAME = SpotifySearch
-SpotifySearch_FILES = SpotifySearch.m
-SpotifySearch_INSTALL_PATH = /Library/SearchLoader/SearchBundles
-SpotifySearch_BUNDLE_EXTENSION = searchBundle
-SpotifySearch_LDFLAGS = -lspotlight
-SpotifySearch_PRIVATE_FRAMEWORKS = Search
-
-include $(THEOS_MAKE_PATH)/bundle.mk
+include $(THEOS_MAKE_PATH)/tweak.mk
+include $(THEOS_MAKE_PATH)/aggregate.mk
 
 internal-stage::
-	mkdir -p $(THEOS_STAGING_DIR)/Library/SearchLoader/Applications
-	cp -r InfoBundle/ $(THEOS_STAGING_DIR)/Library/SearchLoader/Applications/SpotifySearch.bundle
-
-	mkdir -p $(THEOS_STAGING_DIR)/Library/SearchLoader/Preferences
-	cp SpotifySearch.plist $(THEOS_STAGING_DIR)/Library/SearchLoader/Preferences/SpotifySearch.plist
-
+	$(ECHO_NOTHING)mkdir -p $(THEOS_STAGING_DIR)/Library/SearchLoader/Internal/$(ECHO_END)
+	$(ECHO_NOTHING)touch $(THEOS_STAGING_DIR)/Library/SearchLoader/Internal/extendedwatcher.dat$(ECHO_END)
 
 internal-after-install::
 	install.exec "killall -9 backboardd searchd AppIndexer &>/dev/null"
