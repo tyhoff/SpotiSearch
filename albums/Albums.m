@@ -31,37 +31,38 @@
 			NSMutableArray *searchResults = [NSMutableArray array];
 			
 			NSDictionary *root = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-			NSArray *albums = [root objectForKey:@"albums"];
+			NSArray *albums = root[@"albums"];
 
-			for (int i=0; i<[albums count]; i++) {
-				NSDictionary *album = [albums objectAtIndex:i];
-				if (i >= limit)
+			int count = 0;
+			for (NSDictionary *album in albums) {
+				if (count >= limit)
 					break;
 
 				/* create the artist string */
 				NSMutableString * artistString = [NSMutableString string];
-				NSArray * artists = [album objectForKey:@"artists"];
+				NSArray * artists = album[@"artists"];
 				for (int i=0; i<[artists count]; i++) {
-					NSDictionary *artist = [artists objectAtIndex:i];
+					NSDictionary *artist = artists[i];
 
 					if (i == [artists count] - 1)
-						[artistString appendString:[NSString stringWithFormat:@"%@", [artist objectForKey:@"name"]]];
+						[artistString appendString:[NSString stringWithFormat:@"%@", artist[@"name"]]];
 					else
-						[artistString appendString:[NSString stringWithFormat:@"%@, ", [artist objectForKey:@"name"]]];
+						[artistString appendString:[NSString stringWithFormat:@"%@, ", artist[@"name"]]];
 				}
 
 				SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
-				[result setTitle:[album objectForKey:@"name"]];
+				[result setTitle:album[@"name"]];
 				[result setSubtitle:artistString];
 
-				NSString * territories = [[album objectForKey:@"availability"] objectForKey:@"territories"];
+				NSString * territories = album[@"availabiity"][@"territories"];
 				if ([territories rangeOfString:countryCode].location == NSNotFound) {
-					[result setSummary:@"Full album not available"];
+					[result setSummary:@"Full album not available due to territory restrictions"];
 				}
 
-				NSString *url = [album objectForKey:@"href"];
+				NSString *url = album[@"href"];
 				[result setUrl:url];
 				[searchResults addObject:result];
+				count++;
 			}
 			
 			TLCommitResults(searchResults, TLDomain(@"com.spotify.client.albums", @"SpotifySearchAlbums"), results);

@@ -38,19 +38,20 @@
 			NSMutableArray *searchResults = [NSMutableArray array];
 			
 			NSDictionary *root = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-			NSArray *artists = [root objectForKey:@"artists"];
+			NSArray *artists = root[@"artists"];
 
-			for (int i=0; i<[artists count]; i++) {
-				NSDictionary *artist = [artists objectAtIndex:i];
-				if (i >= limit)
+			int count = 0;
+			for (NSDictionary *artist in artists) {
+				if (count >= limit)
 					break;
 
 				SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
-				[result setTitle:[artist objectForKey:@"name"]];
+				[result setTitle:artist[@"name"]];
 
-				NSString *url = [artist objectForKey:@"href"];
+				NSString *url = artist[@"href"];
 				[result setUrl:url];
 				[searchResults addObject:result];
+				count++;
 			}
 			
 			TLCommitResults(searchResults, TLDomain(@"com.spotify.client.artists", @"SpotifySearchArtists"), results);

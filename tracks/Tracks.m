@@ -39,45 +39,46 @@
 			NSMutableArray *searchResults = [NSMutableArray array];
 			
 			NSDictionary *root = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-			NSArray *tracks = [root objectForKey:@"tracks"];
+			NSArray *tracks = root[@"tracks"];
 
-			for (int i=0; i<[tracks count]; i++) {
-				NSDictionary *track = [tracks objectAtIndex:i];
-				if (i >= limit)
+			int count = 0;
+			for (NSDictionary *track in tracks) {
+				if (count >= limit)
 					break;
 
 				/* create the album string */
-				NSDictionary *album = [track objectForKey:@"album"];
+				NSDictionary *album = track[@"album"];
 
-				NSString * territories = [[album objectForKey:@"availability"] objectForKey:@"territories"];
+				NSString * territories = album[@"availability"][@"territories"];
 				if ([territories rangeOfString:countryCode].location == NSNotFound) {
 					continue;
 				}
 
-				NSString *albumString = [NSString stringWithFormat:@"%@ - %@", [album objectForKey:@"name"], [album objectForKey:@"released"]];
+				NSString *albumString = [NSString stringWithFormat:@"%@ - %@", album[@"name"], album[@"released"]];
 				
 
 				/* create the artist string */
 				NSMutableString * artistString = [NSMutableString string];
-				NSArray * artists = [track objectForKey:@"artists"];
+				NSArray * artists = track[@"artists"];
 				for (int j=0; j<[artists count]; j++) {
 					NSDictionary *artist = [artists objectAtIndex:j];
 
 					if (j == [artists count] - 1)
-						[artistString appendString:[NSString stringWithFormat:@"%@", [artist objectForKey:@"name"]]];
+						[artistString appendString:[NSString stringWithFormat:@"%@", artist[@"name"]]];
 					else
-						[artistString appendString:[NSString stringWithFormat:@"%@, ", [artist objectForKey:@"name"]]];
+						[artistString appendString:[NSString stringWithFormat:@"%@, ", artist[@"name"]]];
 				}
 
 
 				SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
-				[result setTitle:[track objectForKey:@"name"]];
+				[result setTitle:track[@"name"]];
 				[result setSubtitle:artistString];
 				[result setSummary:albumString];
 
-				NSString *url = [track objectForKey:@"href"];
+				NSString *url = track[@"href"];
 				[result setUrl:url];
 				[searchResults addObject:result];
+				count++;
 			}
 			
 			TLCommitResults(searchResults, TLDomain(@"com.spotify.client.tracks", @"SpotifySearchTracks"), results);
