@@ -5,9 +5,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>SpotifySearchPrefs</string>
+	<string>SpotiSearchPrefs</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.tyhoff.spotifysearchprefs</string>
+	<string>com.tyhoff.spotisearchprefs</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -23,6 +23,6 @@
 	<key>MinimumOSVersion</key>
 	<string>7</string>
 	<key>NSPrincipalClass</key>
-	<string>SpotifySearchPrefsListController</string>
+	<string>SpotiSearchPrefsListController</string>
 </dict>
 </plist>

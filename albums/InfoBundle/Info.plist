@@ -5,12 +5,12 @@
 	<key>LSTypeIsPackage</key>
 	<true />
 	<key>SPCategory</key>
-	<string>SpotifySearchAlbums</string>
+	<string>SpotiSearchAlbums</string>
 	<key>SPDisplayIdentifier</key>
 	<string>com.spotify.client.albums</string>
 	<key>TLIsSearchBundle</key>
 	<true />
 	<key>TLDisplayName</key>
-	<string>Spotify Albums</string>
+	<string>SpotiSearch Albums</string>
 </dict>
 </plist>

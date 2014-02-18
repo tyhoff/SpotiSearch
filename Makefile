@@ -1,4 +1,4 @@
-SUBPROJECTS = spotifysearchprefs tracks artists albums 
+SUBPROJECTS = spotisearchprefs tracks artists albums 
 
 export ARCHS = armv7 arm64
 

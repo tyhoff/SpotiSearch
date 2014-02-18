@@ -1,0 +1,10 @@
+{
+    entry = {
+	bundle = SpotiSearchPrefs;
+	cell = PSLinkCell;
+	detail = SpotiSearchPrefsListController;
+	icon = SpotiSearch.png;
+	isController = 1;
+	label = SpotiSearch;
+    };
+}

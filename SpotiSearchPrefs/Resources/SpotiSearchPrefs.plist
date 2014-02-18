@@ -22,7 +22,7 @@
             <key>cell</key>
             <string>PSGroupCell</string>
             <key>label</key>
-            <string>Spotify</string>
+            <string>Location</string>
             <key>footerText</key>
             <string>Limits results to only those available.</string>
         </dict>
@@ -30,7 +30,7 @@
             <key>cell</key>
             <string>PSLinkListCell</string>
             <key>defaults</key>
-            <string>com.tyhoff.spotifysearch</string>
+            <string>com.tyhoff.spotisearch</string>
             <key>default</key>
             <string>US</string>
             <key>detail</key>
@@ -178,7 +178,7 @@
             <key>cell</key>
             <string>PSLinkListCell</string>
             <key>defaults</key>
-            <string>com.tyhoff.spotifysearch</string>
+            <string>com.tyhoff.spotisearch</string>
             <key>default</key>
             <integer>5</integer>
             <key>detail</key>
@@ -214,7 +214,7 @@
             <key>cell</key>
             <string>PSLinkListCell</string>
             <key>defaults</key>
-            <string>com.tyhoff.spotifysearch</string>
+            <string>com.tyhoff.spotisearch</string>
             <key>default</key>
             <integer>5</integer>
             <key>detail</key>
@@ -250,7 +250,7 @@
             <key>cell</key>
             <string>PSLinkListCell</string>
             <key>defaults</key>
-            <string>com.tyhoff.spotifysearch</string>
+            <string>com.tyhoff.spotisearch</string>
             <key>default</key>
             <integer>5</integer>
             <key>detail</key>
@@ -296,7 +296,7 @@
             <key>cell</key>
             <string>PSTitleValueCell</string>
             <key>label</key>
-            <string>SpotifySearch 1.0</string>
+            <string>SpotiSearch 1.0</string>
         </dict>
         <dict>
             <key>cell</key>
@@ -312,6 +312,6 @@
         </dict>
     </array>
     <key>title</key>
-    <string>SpotifySearch</string>
+    <string>SpotiSearch</string>
 </dict>
 </plist>

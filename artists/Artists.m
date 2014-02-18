@@ -12,16 +12,16 @@
 #define GET_INT(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).intValue : default)
 #define GET_STR(key, default) (prefs[key] ? prefs[key] : default)
 
-@interface TLSpotifyArtistsDatastore : NSObject <TLSearchDatastore> {
+@interface TLSpotiArtistsDatastore : NSObject <TLSearchDatastore> {
 	BOOL $usingInternet;
 }
 @end
 
-@implementation TLSpotifyArtistsDatastore
+@implementation TLSpotiArtistsDatastore
 - (void)performQuery:(SDSearchQuery *)query withResultsPipe:(SDSearchQuery *)results {
 	NSString *searchString = [query searchString];
 	
-	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotifysearch.plist"];
+	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotisearch.plist"];
 	int limit = GET_INT(@"ArtistLimit", 5);
 
 	searchString = [searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
@@ -54,7 +54,7 @@
 				count++;
 			}
 			
-			TLCommitResults(searchResults, TLDomain(@"com.spotify.client.artists", @"SpotifySearchArtists"), results);
+			TLCommitResults(searchResults, TLDomain(@"com.spotify.client.artists", @"SpotiSearchArtists"), results);
 		}
 		
 		TLRequireInternet(NO);
@@ -67,7 +67,7 @@
 }
 
 - (NSArray *)searchDomains {
-	return [NSArray arrayWithObject:[NSNumber numberWithInteger:TLDomain(@"com.spotify.client.artists", @"SpotifySearchArtists")]];
+	return [NSArray arrayWithObject:[NSNumber numberWithInteger:TLDomain(@"com.spotify.client.artists", @"SpotiSearchArtists")]];
 }
 
 - (NSString *)displayIdentifierForDomain:(NSInteger)domain {

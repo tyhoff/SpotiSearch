@@ -7,11 +7,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>SpotifySearchAlbums</string>
+	<string>SpotiSearchAlbums</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.tyhoff.spotifysearch.albums</string>
+	<string>com.tyhoff.spotisearch.albums</string>
 	<key>CFBundleName</key>
-	<string>SpotifySearchAlbums</string>
+	<string>SpotiSearchAlbums</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -45,7 +45,7 @@
 	<key>MinimumOSVersion</key>
 	<string>5.0</string>
 	<key>NSPrincipalClass</key>
-	<string>TLSpotifyAlbumsDatastore</string>
+	<string>TLSpotiAlbumsDatastore</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
