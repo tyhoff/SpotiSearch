@@ -23,7 +23,6 @@
 	
 	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotifysearch.plist"];
 	int limit = GET_INT(@"ArtistLimit", 5);
-	// NSString * countryCode = GET_STR(@"Country", @"US");
 
 	searchString = [searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 
@@ -39,20 +38,19 @@
 			NSMutableArray *searchResults = [NSMutableArray array];
 			
 			NSDictionary *root = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-			NSArray *items = [root objectForKey:@"artists"];
+			NSArray *artists = [root objectForKey:@"artists"];
 
-			int count = 0;
-			for (NSDictionary *item in items) {
-				if (count >= limit)
+			for (int i=0; i<[artists count]; i++) {
+				NSDictionary *artist = [artists objectAtIndex:i];
+				if (i >= limit)
 					break;
 
 				SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
-				[result setTitle:[item objectForKey:@"name"]];
+				[result setTitle:[artist objectForKey:@"name"]];
 
-				NSString *url = [item objectForKey:@"href"];
+				NSString *url = [artist objectForKey:@"href"];
 				[result setUrl:url];
 				[searchResults addObject:result];
-				count++;
 			}
 			
 			TLCommitResults(searchResults, TLDomain(@"com.spotify.client.artists", @"SpotifySearchArtists"), results);

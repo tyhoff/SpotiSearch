@@ -23,7 +23,7 @@
 	
 	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotifysearch.plist"];
 	int limit = GET_INT(@"TrackLimit", 5);
-	// NSString * countryCode = GET_STR(@"Country", @"US");
+	NSString * countryCode = GET_STR(@"Country", @"US");
 
 	searchString = [searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 
@@ -39,39 +39,45 @@
 			NSMutableArray *searchResults = [NSMutableArray array];
 			
 			NSDictionary *root = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-			NSArray *items = [root objectForKey:@"tracks"];
+			NSArray *tracks = [root objectForKey:@"tracks"];
 
-			int count = 0;
-			for (NSDictionary *item in items) {
-				if (count >= limit)
+			for (int i=0; i<[tracks count]; i++) {
+				NSDictionary *track = [tracks objectAtIndex:i];
+				if (i >= limit)
 					break;
+
+				/* create the album string */
+				NSDictionary *album = [track objectForKey:@"album"];
+
+				NSString * territories = [[album objectForKey:@"availability"] objectForKey:@"territories"];
+				if ([territories rangeOfString:countryCode].location == NSNotFound) {
+					continue;
+				}
+
+				NSString *albumString = [NSString stringWithFormat:@"%@ - %@", [album objectForKey:@"name"], [album objectForKey:@"released"]];
+				
 
 				/* create the artist string */
 				NSMutableString * artistString = [NSMutableString string];
-				NSArray * artists = [item objectForKey:@"artists"];
-				for (int i=0; i<[artists count]; i++) {
-					NSDictionary *artist = [artists objectAtIndex:i];
+				NSArray * artists = [track objectForKey:@"artists"];
+				for (int j=0; j<[artists count]; j++) {
+					NSDictionary *artist = [artists objectAtIndex:j];
 
-					if (i == [artists count] - 1)
+					if (j == [artists count] - 1)
 						[artistString appendString:[NSString stringWithFormat:@"%@", [artist objectForKey:@"name"]]];
 					else
 						[artistString appendString:[NSString stringWithFormat:@"%@, ", [artist objectForKey:@"name"]]];
 				}
 
 
-				/* create the album string */
-				NSDictionary *album = [item objectForKey:@"album"];
-				NSString *albumString = [NSString stringWithFormat:@"%@ - %@", [album objectForKey:@"name"], [album objectForKey:@"released"]];
-
 				SPSearchResult *result = [[[SPSearchResult alloc] init] autorelease];
-				[result setTitle:[item objectForKey:@"name"]];
+				[result setTitle:[track objectForKey:@"name"]];
 				[result setSubtitle:artistString];
 				[result setSummary:albumString];
 
-				NSString *url = [item objectForKey:@"href"];
+				NSString *url = [track objectForKey:@"href"];
 				[result setUrl:url];
 				[searchResults addObject:result];
-				count++;
 			}
 			
 			TLCommitResults(searchResults, TLDomain(@"com.spotify.client.tracks", @"SpotifySearchTracks"), results);
