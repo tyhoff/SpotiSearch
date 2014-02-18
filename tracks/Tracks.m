@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <SearchLoader/TLLibrary.h>
 
+#define GET_INT(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).intValue : default)
+#define GET_STR(key, default) (prefs[key] ? prefs[key] : default)
 
 @interface TLSpotifyTracksDatastore : NSObject <TLSearchDatastore> {
 	BOOL $usingInternet;
@@ -19,7 +21,9 @@
 - (void)performQuery:(SDSearchQuery *)query withResultsPipe:(SDSearchQuery *)results {
 	NSString *searchString = [query searchString];
 	
-	int limit = [[[NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotifysearch.tracks.plist"] objectForKey:@"Limit"] intValue] ?: 5;
+	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotifysearch.plist"];
+	int limit = GET_INT(@"TrackLimit", 5);
+	// NSString * countryCode = GET_STR(@"Country", @"US");
 
 	searchString = [searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 
@@ -29,8 +33,8 @@
 	TLRequireInternet(YES);
 	$usingInternet = YES;
 
-	NSOperationQueue *operationQueue = [[[NSOperationQueue alloc] init] autorelease];
-	[NSURLConnection sendAsynchronousRequest:request queue:operationQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+	NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];
+	[NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
 		if (data != nil) {
 			NSMutableArray *searchResults = [NSMutableArray array];
 			

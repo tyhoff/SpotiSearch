@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <SearchLoader/TLLibrary.h>
 
+#define GET_INT(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).intValue : default)
+#define GET_STR(key, default) (prefs[key] ? prefs[key] : default)
 
 @interface TLSpotifyArtistsDatastore : NSObject <TLSearchDatastore> {
 	BOOL $usingInternet;
@@ -19,7 +21,9 @@
 - (void)performQuery:(SDSearchQuery *)query withResultsPipe:(SDSearchQuery *)results {
 	NSString *searchString = [query searchString];
 	
-	int limit = [[[NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotifysearch.artists.plist"] objectForKey:@"Limit"] intValue] ?: 5;
+	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotifysearch.plist"];
+	int limit = GET_INT(@"ArtistLimit", 5);
+	// NSString * countryCode = GET_STR(@"Country", @"US");
 
 	searchString = [searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 

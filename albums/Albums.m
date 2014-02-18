@@ -1,14 +1,8 @@
-/*%%%%%
-%% Store.m
-%% Spotlight+ Store Search Bundle
-%% by theiostream
-%%
-%% iTunes Search API: http://www.apple.com/itunes/affiliates/resources/documentation/itunes-store-web-service-search-api.html
-%%*/
-
 #import <Foundation/Foundation.h>
 #import <SearchLoader/TLLibrary.h>
 
+#define GET_INT(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).intValue : default)
+#define GET_STR(key, default) (prefs[key] ? prefs[key] : default)
 
 @interface TLSpotifyAlbumsDatastore : NSObject <TLSearchDatastore> {
 	BOOL $usingInternet;
@@ -19,7 +13,9 @@
 - (void)performQuery:(SDSearchQuery *)query withResultsPipe:(SDSearchQuery *)results {
 	NSString *searchString = [query searchString];
 	
-	int limit = [[[NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotifysearch.albums.plist"] objectForKey:@"Limit"] intValue] ?: 5;
+	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotifysearch.plist"];
+	int limit = GET_INT(@"AlbumLimit", 5);
+	// NSString * countryCode = GET_STR(@"Country", @"US");
 
 	searchString = [searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 
