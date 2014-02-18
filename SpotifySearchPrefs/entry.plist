@@ -1,0 +1,10 @@
+{
+    entry = {
+	bundle = SpotifySearchPrefs;
+	cell = PSLinkCell;
+	detail = SpotifySearchPrefsListController;
+	icon = SpotifySearch.png;
+	isController = 1;
+	label = SpotifySearch;
+    };
+}

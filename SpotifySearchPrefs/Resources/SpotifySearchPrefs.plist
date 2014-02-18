@@ -2,24 +2,29 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>entry</key>
-    <dict>
-        <key>cell</key>
-        <string>PSLinkCell</string>
-        <key>icon</key>
-        <string>SpotifySearch.png</string>
-        <key>label</key>
-        <string>SpotifySearch</string>
-    </dict>
     <key>items</key>
     <array>
         <dict>
             <key>cell</key>
             <string>PSGroupCell</string>
             <key>label</key>
-            <string></string>
+            <string>Spotlight</string>
+        </dict>
+        <dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>bundle</key>
+			<string>SearchSettings</string>
+			<key>label</key>
+			<string></string>
+		</dict>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>Spotify</string>
             <key>footerText</key>
-            <string>Makes only valid results show in search.</string>
+            <string>Limits results to only those available.</string>
         </dict>
         <dict>
             <key>cell</key>
@@ -167,7 +172,7 @@
             <key>label</key>
             <string>Result Limits</string>
             <key>footerText</key>
-            <string>To enable/disable any of these sections, do so in Settings->General->Spotlight.</string>
+            <string>To enable/disable any of these sections, do so above with "Spotlight Search"</string>
         </dict>
         <dict>
             <key>cell</key>
@@ -179,9 +184,9 @@
             <key>detail</key>
             <string>PSListItemsController</string>
             <key>label</key>
-            <string>Tracks</string>
+            <string>Albums</string>
             <key>key</key>
-            <string>TrackLimit</string>
+            <string>AlbumLimit</string>
             <key>validTitles</key>
             <array>
                 <string>1</string>
@@ -251,9 +256,9 @@
             <key>detail</key>
             <string>PSListItemsController</string>
             <key>label</key>
-            <string>Albums</string>
+            <string>Tracks</string>
             <key>key</key>
-            <string>AlbumLimit</string>
+            <string>TrackLimit</string>
             <key>validTitles</key>
             <array>
                 <string>1</string>
@@ -284,12 +289,14 @@
             <true/>
             <key>label</key>
             <string>Credit</string>
+            <key>footerText</key>
+            <string>Thanks to @ferreiradaniel2 for the incredible SearchLoader library. </string>
         </dict>
         <dict>
             <key>cell</key>
             <string>PSTitleValueCell</string>
             <key>label</key>
-            <string>SpotifySearch</string>
+            <string>SpotifySearch 1.0</string>
         </dict>
         <dict>
             <key>cell</key>
