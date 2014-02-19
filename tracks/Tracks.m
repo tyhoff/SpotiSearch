@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <SearchLoader/TLLibrary.h>
 
+#define GET_BOOL(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).boolValue : default)
 #define GET_INT(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).intValue : default)
 #define GET_STR(key, default) (prefs[key] ? prefs[key] : default)
 
@@ -24,6 +25,7 @@
 	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.tyhoff.spotisearch.plist"];
 	int limit = GET_INT(@"TrackLimit", 5);
 	NSString * countryCode = GET_STR(@"Country", @"US");
+	NSString * trackStartRadio = GET_STR(@"SelectTrackAction", @"track");
 
 	searchString = [searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 
@@ -75,7 +77,14 @@
 				[result setSubtitle:artistString];
 				[result setSummary:albumString];
 
-				NSString *url = track[@"href"];
+				NSMutableString *url = [NSMutableString stringWithCapacity:50];
+				[url setString:track[@"href"]];
+
+				if ([trackStartRadio isEqualToString:@"radio"])
+				{
+					[url insertString:@"radio:" atIndex:8];
+				}
+
 				[result setUrl:url];
 				[searchResults addObject:result];
 				count++;

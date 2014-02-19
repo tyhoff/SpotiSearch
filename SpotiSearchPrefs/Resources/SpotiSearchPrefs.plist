@@ -170,6 +170,38 @@
             <key>cell</key>
             <string>PSGroupCell</string>
             <key>label</key>
+            <string>Select Track Action</string>
+            <key>footerText</key>
+            <string>Spotify Free users should select "Plays radio station" this since on-demand playing is not allowed.</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSLinkListCell</string>
+            <key>defaults</key>
+            <string>com.tyhoff.spotisearch</string>
+            <key>default</key>
+            <string>track</string>
+            <key>detail</key>
+            <string>PSListItemsController</string>
+            <key>label</key>
+            <string>Action</string>
+            <key>key</key>
+            <string>SelectTrackAction</string>
+            <key>validTitles</key>
+            <array>
+                <string>Play Track (Premium)</string>
+                <string>Play radio station</string>
+            </array>
+            <key>validValues</key>
+            <array>
+                <string>track</string>
+                <string>radio</string>
+            </array>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
             <string>Result Limits</string>
             <key>footerText</key>
             <string>To enable/disable any of these sections, do so above with "Spotlight Search"</string>
